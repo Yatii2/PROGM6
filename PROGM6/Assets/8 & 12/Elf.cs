@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public class Elf : EnemyParent
+public class Elf : Unit, IMovable, IDamagable
 {
     private MeshRenderer objectRenderer;
 
-    void Start()
+    new void Start()
     {
         base.Start();
 
@@ -19,7 +19,7 @@ public class Elf : EnemyParent
     {
         if (health > 0)
         {
-            MoveEnemy();
+            Move();
         }
     }
     private System.Collections.IEnumerator ToggleVisibility()

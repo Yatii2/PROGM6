@@ -1,15 +1,15 @@
 using UnityEngine;
 
-public class EnemyParent : MonoBehaviour
+public class Unit : MonoBehaviour, IMovable, IDamagable
 {
-    public float speed = 5f;     
-    public int health = 3;     
+    public float speed = 5f;
+    public int health = 3;
     public float range = 100f;
 
     private Vector3 startPosition;
     private bool moveRight = true;
-
-    protected void Start()
+    public int Health => health;
+    protected virtual void Start()
     {
         startPosition = transform.position;
     }
@@ -18,11 +18,11 @@ public class EnemyParent : MonoBehaviour
     {
         if (health > 0)
         {
-            MoveEnemy();
+            Move();
         }
     }
-
-    protected void MoveEnemy()
+    
+    public virtual void Move()
     {
         float maxOffset = range / 2;
         if (moveRight)
@@ -39,19 +39,18 @@ public class EnemyParent : MonoBehaviour
         }
     }
 
-
-    public void TakeDamage(int damage)
+    public virtual void TakeDamage()
     {
-        health -= damage;
+        health -= 10;
         if (health <= 0)
         {
             Die();
         }
     }
 
-    void Die()
+    protected virtual void Die()
     {
-        Debug.Log("Enemy is destroyed!");
+        Debug.Log("Unit is destroyed!");
         Destroy(gameObject);
     }
 
@@ -59,7 +58,7 @@ public class EnemyParent : MonoBehaviour
     {
         if (collision.CompareTag("Projectile"))
         {
-            TakeDamage(1);
+            TakeDamage();
             Destroy(collision.gameObject);
         }
     }

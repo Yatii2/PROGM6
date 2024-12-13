@@ -1,9 +1,9 @@
 using UnityEngine;
 
-public class Brute : EnemyParent
+public class Brute : Unit, IMovable, IDamagable
 {
     
-    void Start()
+    new void Start()
     {
         base.Start();
 
@@ -16,7 +16,7 @@ public class Brute : EnemyParent
     {
         if (health > 0)
         {
-            MoveEnemy();
+            Move();
         }
     }
 }
